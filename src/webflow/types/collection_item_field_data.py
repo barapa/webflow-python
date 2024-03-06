@@ -10,6 +10,7 @@ try:
 except ImportError:
     import pydantic  # type: ignore
 
+from pydantic import Extra
 
 class CollectionItemFieldData(pydantic.BaseModel):
     name: typing.Optional[str] = pydantic.Field(description="Name of the Item")
@@ -26,6 +27,7 @@ class CollectionItemFieldData(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
+        extra = Extra.allow
         frozen = True
         smart_union = True
         json_encoders = {dt.datetime: serialize_datetime}
